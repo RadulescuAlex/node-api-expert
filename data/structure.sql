@@ -1,9 +1,8 @@
-CREATE TABLE IF NOT EXISTS teams 
+CREATE TABLE IF NOT EXISTS words 
 (
   id INT NOT NULL AUTO_INCREMENT,
-  promotion text NOT NULL,
-  members TEXT NOT NULL,
-  name TEXT NOT NULL,
-  url TEXT NOT NULL,
+  domain text NOT NULL,
+  word TEXT NOT NULL,
+  explication TEXT NOT NULL,
   PRIMARY KEY (id)
 ) ENGINE = InnoDB;

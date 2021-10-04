@@ -14,7 +14,7 @@ const pool = mysql.createPool({
   host: "localhost",
   user: "root",
   password: "",
-  database: "teams"
+  database: "expert_info"
 });
 
 /**
@@ -40,7 +40,7 @@ router.get("/install", function (req, res, next) {
 router.get("/", function (req, res, next) {
   pool.getConnection(function (err, connection) {
     if (err) throw err;
-    const sql = `SELECT id, promotion, members, name, url FROM teams`;
+    const sql = `SELECT id, domain, word, explication FROM words`;
     connection.query(sql, function (err, results) {
       if (err) {
         console.error(err);
