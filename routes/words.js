@@ -18,7 +18,7 @@ const pool = mysql.createPool({
 });
 
 /**
- * run this before first USAGE to create teams TABLE
+ * run this before first USAGE to create words TABLE
  */
 router.get("/install", function (req, res, next) {
   pool.getConnection(function (err, connection) {
@@ -65,7 +65,7 @@ router.post("/create", function (req, res, next) {
 
   pool.getConnection(function (err, connection) {
     if (err) throw err;
-    const sql = `INSERT INTO teams (id, promotion, members, name, url) VALUES (NULL, ?, ?, ?, ?);`;
+    const sql = `INSERT INTO words (id, domain, word, explication) VALUES (NULL, ?, ?, ?);`;
     connection.query(sql, [promotion, members, name, url], function (err, results) {
       if (err) throw err;
       const id = results.insertId;
@@ -86,7 +86,7 @@ router.delete("/delete", function (req, res, next) {
 
   pool.getConnection(function (err, connection) {
     if (err) throw err;
-    const sql = `DELETE FROM teams WHERE id=?`;
+    const sql = `DELETE FROM words WHERE id=?`;
     connection.query(sql, [id], function (err, results) {
       if (err) throw err;
       connection.release();
@@ -106,7 +106,7 @@ router.put("/update", function (req, res, next) {
 
   pool.getConnection(function (err, connection) {
     if (err) throw err;
-    const sql = `UPDATE teams SET members=?, name=?, url=? WHERE id=?`;
+    const sql = `UPDATE words SET word=?, explication=? WHERE id=?`;
     connection.query(sql, [members, name, url, id], function (err, results) {
       if (err) throw err;
       connection.release();
