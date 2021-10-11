@@ -58,15 +58,15 @@ router.get("/", function (req, res, next) {
  *
  */
 router.post("/create", function (req, res, next) {
-  const promotion = req.body.promotion;
-  const members = req.body.members;
-  const name = req.body.name;
-  const url = req.body.url;
+  const domain = req.body.domain;
+  const word = req.body.word;
+  const explication = req.body.explication;
+  
 
   pool.getConnection(function (err, connection) {
     if (err) throw err;
     const sql = `INSERT INTO words (id, domain, word, explication) VALUES (NULL, ?, ?, ?);`;
-    connection.query(sql, [promotion, members, name, url], function (err, results) {
+    connection.query(sql, [domain, word, explication], function (err, results) {
       if (err) throw err;
       const id = results.insertId;
       connection.release();
@@ -100,9 +100,9 @@ router.delete("/delete", function (req, res, next) {
  */
 router.put("/update", function (req, res, next) {
   const id = req.body.id;
-  const members = req.body.members;
-  const name = req.body.name;
-  const url = req.body.url;
+  const domain = req.body.domain;
+  const word = req.body.word;
+  const explication = req.body.explication;
 
   pool.getConnection(function (err, connection) {
     if (err) throw err;
