@@ -38,10 +38,21 @@ router.get("/install", function (req, res, next) {
  *
  */
 router.get("/", function (req, res, next) {
+  const domain = req.query.domain;
+  const query = req.query.query;
+  console.log("Search for domain: ", domain);
+  console.log("Search for query: ", query);
   pool.getConnection(function (err, connection) {
     if (err) throw err;
-    const sql = `SELECT id, domain, word, explication FROM words`;
-    connection.query(sql, function (err, results) {
+    const sql = `SELECT 
+        id,
+        word, 
+        explication 
+      FROM words 
+      WHERE 
+        domain=? AND 
+        (word LIKE ? OR explication LIKE ?)`;
+    connection.query(sql,[domain, `%${query}%`, `%${query}%`], function (err, results) {
       if (err) {
         console.error(err);
         connection.release();
@@ -81,7 +92,7 @@ router.post("/create", function (req, res, next) {
 /**
  *
  */
-router.delete("/delete", function (req, res, next) {
+ router.delete("/delete", function (req, res, next) {
   const id = req.body.id;
 
   pool.getConnection(function (err, connection) {
