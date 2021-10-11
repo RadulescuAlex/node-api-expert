@@ -107,7 +107,7 @@ router.put("/update", function (req, res, next) {
   pool.getConnection(function (err, connection) {
     if (err) throw err;
     const sql = `UPDATE words SET word=?, explication=? WHERE id=?`;
-    connection.query(sql, [members, name, url, id], function (err, results) {
+    connection.query(sql, [domain, word, explication, id], function (err, results) {
       if (err) throw err;
       connection.release();
       res.json({ success: true });
